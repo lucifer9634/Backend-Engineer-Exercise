@@ -1,0 +1,91 @@
+import numpy as np
+import pandas as pd
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+
+import os
+
+os.listdir('data')
+
+airlines_df=pd.read_csv("data/airlines.csv")
+airports_df=pd.read_csv("data/airports.csv")
+flights_df=pd.read_csv("data/flights.csv")
+planes_df=pd.read_csv("data/planes.csv")
+weather_df=pd.read_csv("data/weather.csv")
+
+flights_df.info()
+
+flights_df.head(5)
+
+flights_df.describe()
+
+flights_df_jan_14
+
+flights_df_jan
+
+flights_df_2013=flights_df[flights_df.year==2013]
+
+flights_df_2013
+
+flights_df_jan=flights_df[flights_df.month==1]
+flights_df_feb=flights_df[flights_df.month==2]
+flights_df_mar=flights_df[flights_df.month==3]
+flights_df_apr=flights_df[flights_df.month==4]
+flights_df_may=flights_df[flights_df.month==5]
+flights_df_jun=flights_df[flights_df.month==6]
+flights_df_jul=flights_df[flights_df.month==7]
+flights_df_aug=flights_df[flights_df.month==8]
+flights_df_sept=flights_df[flights_df.month==9]
+flights_df_oct=flights_df[flights_df.month==10]
+flights_df_nov=flights_df[flights_df.month==11]
+flights_df_dec=flights_df[flights_df.month==12]
+
+jan=len(flights_df_jan.value_counts('day'))
+feb=len(flights_df_feb.value_counts('day'))
+mar=len(flights_df_mar.value_counts('day'))
+apr=len(flights_df_apr.value_counts('day'))
+may=len(flights_df_may.value_counts('day'))
+jun=len(flights_df_jun.value_counts('day'))
+jul=len(flights_df_jul.value_counts('day'))
+aug=len(flights_df_aug.value_counts('day'))
+sept=len(flights_df_sept.value_counts('day'))
+octo=len(flights_df_oct.value_counts('day'))
+nov=len(flights_df_nov.value_counts('day'))
+dec=len(flights_df_dec.value_counts('day'))
+
+total_days=jan+feb+mar+apr+may+jun+jul+aug+sept+octo+nov+dec
+
+print(total_days)
+
+departure=flights_df.value_counts('origin')
+
+departure_details=len(departure),departure
+
+departure_details
+
+planes_df
+
+merged_df=flights_df.merge(planes_df, on='tailnum')
+
+corr=merged_df.corr()
+corr
+
+fig=plt.figure(figsize=(8,8))
+plt.matshow(corr, cmap="BuGn",)
+plt.xticks(range(len(corr.columns)),corr.columns,rotation="vertical");
+plt.yticks(range(len(corr.columns)),corr.columns);
+
+matplotlib.rcParams['font.size'] = 14
+matplotlib.rcParams['figure.figsize'] = (9, 5)
+matplotlib.rcParams['figure.facecolor'] = '#00000000'
+
+sns.scatterplot(y=merged_df.seats, x=merged_df.flight);
+
+delay=merged_df[merged_df.dep_delay>0]
+
+delay[['manufacturer','dep_delay']].max()
+
+flights_df[['origin','dest']].value_counts()
+
