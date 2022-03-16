@@ -70,6 +70,7 @@ departure_details
  JFK    111279
  LGA    104662
  dtype: int64)
+ cities are new york,newark
 Q3.what is the relationship between flights and planes tables?
 Ans.
 merged_df=flights_df.merge(planes_df, on='tailnum')
@@ -101,7 +102,7 @@ Q5.which are the two most connected cities?
 Ans.
 flights_df[['origin','dest']].value_counts()
 origin  dest
-JFK     LAX     11262
+JFK     LAX     11262   jfk:new york   dest: los angeles
 LGA     ATL     10263
         ORD      8857
 JFK     SFO      8204
