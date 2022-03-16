@@ -1,3 +1,6 @@
+##setting up working environment
+
+
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -8,6 +11,8 @@ import seaborn as sns
 import os
 
 os.listdir('data')
+
+##loading csv files
 
 airlines_df=pd.read_csv("data/airlines.csv")
 airports_df=pd.read_csv("data/airports.csv")
@@ -20,15 +25,8 @@ flights_df.info()
 flights_df.head(5)
 
 flights_df.describe()
-
-flights_df_jan_14
-
-flights_df_jan
-
-flights_df_2013=flights_df[flights_df.year==2013]
-
-flights_df_2013
-
+Q1.how many total number of days does the flights table cover?
+ans.
 flights_df_jan=flights_df[flights_df.month==1]
 flights_df_feb=flights_df[flights_df.month==2]
 flights_df_mar=flights_df[flights_df.month==3]
@@ -58,20 +56,27 @@ dec=len(flights_df_dec.value_counts('day'))
 total_days=jan+feb+mar+apr+may+jun+jul+aug+sept+octo+nov+dec
 
 print(total_days)
-
+ans.365
+Q2.how many departure cities (not airports) does the flights database cover?
+ans.
 departure=flights_df.value_counts('origin')
 
 departure_details=len(departure),departure
 
 departure_details
-
-planes_df
-
+(3,
+ origin
+ EWR    120835
+ JFK    111279
+ LGA    104662
+ dtype: int64)
+Q3.what is the relationship between flights and planes tables?
+Ans.
 merged_df=flights_df.merge(planes_df, on='tailnum')
 
 corr=merged_df.corr()
 corr
-
+## we get the whole coorelation values 
 fig=plt.figure(figsize=(8,8))
 plt.matshow(corr, cmap="BuGn",)
 plt.xticks(range(len(corr.columns)),corr.columns,rotation="vertical");
@@ -80,12 +85,31 @@ plt.yticks(range(len(corr.columns)),corr.columns);
 matplotlib.rcParams['font.size'] = 14
 matplotlib.rcParams['figure.figsize'] = (9, 5)
 matplotlib.rcParams['figure.facecolor'] = '#00000000'
-
+## we get the heatmap here by corelation we understand that there is relation between seats,flight
+## so we draw a scateer plot to for more insights.
 sns.scatterplot(y=merged_df.seats, x=merged_df.flight);
-
+Q4.which airplane manufacturer incurred the most delays in the analysis period?
+Ans.
+## at first we take only positives values of dep_delay.
 delay=merged_df[merged_df.dep_delay>0]
 
 delay[['manufacturer','dep_delay']].max()
-
+manufacturer    STEWART MACO
+dep_delay             1301.0
+dtype: object
+Q5.which are the two most connected cities?
+Ans.
 flights_df[['origin','dest']].value_counts()
-
+origin  dest
+JFK     LAX     11262
+LGA     ATL     10263
+        ORD      8857
+JFK     SFO      8204
+LGA     CLT      6168
+                ...  
+JFK     STL         1
+EWR     LGA         1
+LGA     LEX         1
+JFK     MEM         1
+        BHM         1
+Length: 224, dtype: int64
